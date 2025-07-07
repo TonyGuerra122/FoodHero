@@ -42,11 +42,6 @@ php artisan serve
 ```
 ---
 
-## ✅ Executando os testes
-```bash
-php artisan test
-```
----
 
 ## 📘 Documentação da API (Swagger)
 A documentação é gerada automaticamente usando L5-Swagger.
