@@ -5,6 +5,7 @@ namespace App\Http\Docs\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 abstract class FavoriteProductDocs extends Controller
 {
@@ -151,5 +152,5 @@ abstract class FavoriteProductDocs extends Controller
      *     )
      * )
      */
-    abstract public function destroy(Request $request, string $id): JsonResponse;
+    abstract public function destroy(Request $request, string $id): Response;
 }

@@ -14,7 +14,7 @@ class ProductController extends ProductDocs
     public function getAll(): JsonResponse
     {
         $products = $this->service->fetchProducts();
-        return response()->json($products, 200);
+        return response()->json($products);
     }
 
     public function getById(string $id): JsonResponse
@@ -26,6 +26,6 @@ class ProductController extends ProductDocs
             throw new NotFoundHttpException("Product with ID {$idParam} not found.");
         }
 
-        return response()->json($product, 200);
+        return response()->json($product);
     }
 }

@@ -104,7 +104,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "User promoted successfully"
                     },
                     "401": {
@@ -321,7 +321,7 @@
                 "summary": "Delete authenticated user",
                 "operationId": "authDelete",
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "User deleted successfully"
                     },
                     "401": {

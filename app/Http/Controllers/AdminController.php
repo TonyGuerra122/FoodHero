@@ -7,6 +7,7 @@ use App\Http\Docs\AdminDocs;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdminController extends AdminDocs
@@ -15,11 +16,11 @@ class AdminController extends AdminDocs
     {
         return response()->json([
             'message' => "List of users",
-            self::paginate(User::query(), $request)
+            ...self::paginate(User::query(), $request)
         ]);
     }
 
-    public function deleteUser(string $id): JsonResponse
+    public function deleteUser(string $id): Response
     {
         $idParam = self::validateIdParameter($id);
 
@@ -30,9 +31,8 @@ class AdminController extends AdminDocs
         }
 
         $user->delete();
-        return response()->json([
-            'message' => "User deleted successfully"
-        ]);
+
+        return response()->noContent();
     }
 
     public function promoteUser(string $id): JsonResponse

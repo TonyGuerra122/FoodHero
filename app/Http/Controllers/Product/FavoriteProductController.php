@@ -7,6 +7,7 @@ use App\Models\Product\FavoriteProduct;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -75,7 +76,7 @@ class FavoriteProductController extends FavoriteProductDocs
         return response()->json($favoriteProduct, 201);
     }
 
-    public function destroy(Request $request, string $id): JsonResponse
+    public function destroy(Request $request, string $id): Response
     {
         $idParam = self::validateIdParameter($id);
 
@@ -84,11 +85,13 @@ class FavoriteProductController extends FavoriteProductDocs
             ->first();
 
         if (!$favoriteProduct) {
-            return response()->json(['message' => 'Favorite product not found'], 404);
+            throw new NotFoundHttpException(
+                'Favorite product with ID ' . $idParam . ' not found for the authenticated user.'
+            );
         }
 
         $favoriteProduct->delete();
 
-        return response()->json(['message' => 'Favorite product removed successfully']);
+        return response()->noContent(204);
     }
 }

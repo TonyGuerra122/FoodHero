@@ -5,6 +5,7 @@ namespace App\Http\Docs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 abstract class AuthDocs extends Controller
 {
@@ -58,12 +59,12 @@ abstract class AuthDocs extends Controller
      *     tags={"Auth"},
      *     summary="Logout user",
      *     security={{"sanctum":{}}},
-     *     @OA\Response(response=200, description="Logged out successfully"),
+     *     @OA\Response(response=204, description="Logged out successfully"),
      *     @OA\Response(response=401, description="Unauthenticated"),
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
-    abstract public function logout(Request $request): JsonResponse;
+    abstract public function logout(Request $request): Response;
 
     /**
      * @OA\Get(
@@ -86,10 +87,10 @@ abstract class AuthDocs extends Controller
      *     tags={"Auth"},
      *     summary="Delete authenticated user",
      *     security={{"sanctum":{}}},
-     *     @OA\Response(response=200, description="User deleted successfully"),
+     *     @OA\Response(response=204, description="User deleted successfully"),
      *     @OA\Response(response=401, description="Unauthenticated"),
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
-    abstract public function delete(Request $request): JsonResponse;
+    abstract public function delete(Request $request): Response;
 }

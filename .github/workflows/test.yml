@@ -1,0 +1,48 @@
+name: Run Laravel Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: mbstring, xml, curl, bcmath, json, fileinfo, tokenizer, pdo_sqlite
+          coverage: xdebug
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Configure SQLite in-memory
+        run: |
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=:memory:/' .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Run tests with coverage
+        run: php artisan test --coverage-text --coverage-html=coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: coverage/

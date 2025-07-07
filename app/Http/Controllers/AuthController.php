@@ -8,7 +8,9 @@ use App\Http\Docs\AuthDocs;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends AuthDocs
 {
@@ -41,20 +43,17 @@ class AuthController extends AuthDocs
 
     public function login(Request $request): JsonResponse
     {
-        $data = $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-        ], [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'password.required' => 'The password field is required.',
         ]);
 
-        if (!Auth::attempt($data)) {
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw new UnauthorizedException("Invalid credentials.");
         }
 
-        $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -64,18 +63,13 @@ class AuthController extends AuthDocs
         ]);
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): Response
     {
-        /** @var \Laravel\Sanctum\PersonalAccessToken|null $token */
-        $token = $request->user()->currentAccessToken();
+        $user = $request->user();
 
-        if ($token) {
-            $token->delete();
-        }
+        $user->tokens()->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully.',
-        ]);
+        return response()->noContent();
     }
 
     public function me(Request $request): JsonResponse
@@ -85,14 +79,12 @@ class AuthController extends AuthDocs
         ]);
     }
 
-    public function delete(Request $request): JsonResponse
+    public function delete(Request $request): Response
     {
         $user = $request->user();
         $user->tokens()->delete();
         $user->delete();
 
-        return response()->json([
-            'message' => 'Account deleted successfully.',
-        ]);
+        return response()->noContent();
     }
 }

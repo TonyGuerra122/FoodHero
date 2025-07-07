@@ -5,6 +5,7 @@ namespace App\Http\Docs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 abstract class AdminDocs extends Controller
 {
@@ -46,7 +47,7 @@ abstract class AdminDocs extends Controller
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
-    abstract public function deleteUser(string $id): JsonResponse;
+    abstract public function deleteUser(string $id): Response;
 
     /**
      * @OA\Put(
@@ -63,7 +64,7 @@ abstract class AdminDocs extends Controller
      *         @OA\Schema(type="integer"),
      *         description="ID of the user to promote"
      *     ),
-     *     @OA\Response(response=200, description="User promoted successfully"),
+     *     @OA\Response(response=204, description="User promoted successfully"),
      *     @OA\Response(response=401, description="Unauthorized"),
      *     @OA\Response(response=403, description="Forbidden (not admin)"),
      *     @OA\Response(response=404, description="User not found"),
