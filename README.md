@@ -40,8 +40,15 @@ php artisan migrate
 # Rode o servidor local
 php artisan serve
 ```
----
 
+---
+## 🧪 Como testar
+Rode o comando:
+```bash
+php artisan test
+```
+
+---
 
 ## 📘 Documentação da API (Swagger)
 A documentação é gerada automaticamente usando L5-Swagger.
