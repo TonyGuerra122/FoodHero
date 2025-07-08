@@ -50,6 +50,26 @@ php artisan test
 
 ---
 
+## 🌱 Seeders (dados iniciais)
+O projeto inclui seeders para facilitar o desenvolvimento e os testes. Eles populam o banco de dados com:
+-   Usuário administrador
+
+-   Usuários comuns
+
+-   Produtos de exemplo (via cache com dados mockados da Fake Store API)
+
+
+### Como rodar os seeders
+Após executar as migrations, você pode rodar os seeders com:
+```bash
+php artisan db::seed
+```
+Ou, para recriar o banco e popular com dados:
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
 ## 📘 Documentação da API (Swagger)
 A documentação é gerada automaticamente usando L5-Swagger.
 ```bash
