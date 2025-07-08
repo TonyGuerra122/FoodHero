@@ -61,7 +61,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "User deleted successfully"
                     },
                     "401": {
@@ -104,7 +104,7 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "User promoted successfully"
                     },
                     "401": {
@@ -271,7 +271,7 @@
                 "summary": "Logout user",
                 "operationId": "authLogout",
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "Logged out successfully"
                     },
                     "401": {

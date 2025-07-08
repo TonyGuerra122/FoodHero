@@ -40,7 +40,7 @@ abstract class AdminDocs extends Controller
      *         @OA\Schema(type="integer"),
      *         description="ID of the user to delete"
      *     ),
-     *     @OA\Response(response=200, description="User deleted successfully"),
+     *     @OA\Response(response=204, description="User deleted successfully"),
      *     @OA\Response(response=401, description="Unauthorized"),
      *     @OA\Response(response=403, description="Forbidden (not admin)"),
      *     @OA\Response(response=404, description="User not found"),
@@ -64,7 +64,7 @@ abstract class AdminDocs extends Controller
      *         @OA\Schema(type="integer"),
      *         description="ID of the user to promote"
      *     ),
-     *     @OA\Response(response=204, description="User promoted successfully"),
+     *     @OA\Response(response=200, description="User promoted successfully"),
      *     @OA\Response(response=401, description="Unauthorized"),
      *     @OA\Response(response=403, description="Forbidden (not admin)"),
      *     @OA\Response(response=404, description="User not found"),
